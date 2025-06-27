@@ -129,6 +129,17 @@ export default function PortGrid({ gridData, onGridChange, readonly = false }: P
       baseClass += " hover:bg-gray-100"
     }
 
+    if (y === 9) {
+      baseClass += " border-b-red-300"
+    } else if (y === 8) {
+      baseClass += " border-t-red-300"
+    }
+    if (x === 8) {
+      baseClass += " border-r-red-300"
+    } else if (x === 9) {
+      baseClass += " border-l-red-300"
+    }
+
     return baseClass
   }
 
@@ -201,10 +212,10 @@ export default function PortGrid({ gridData, onGridChange, readonly = false }: P
       )}
 
       {/* Coordinate Display */}
-      {hoveredCell && !readonly && (
+      {!readonly && (
         <div className="text-center">
           <div className="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
-            Coordinates: ({hoveredCell.x}, {hoveredCell.y})
+            {hoveredCell ? `Coordinates: ${hoveredCell.x}x, ${hoveredCell.y}y` : 'Coordinates'}
           </div>
         </div>
       )}
