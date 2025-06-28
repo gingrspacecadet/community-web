@@ -6,4 +6,4 @@
 
 Project is live at:
 
-**https://community.bigstone.ovh**
+**https://www.community.bigstone.ovh**
