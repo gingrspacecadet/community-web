@@ -1,36 +1,51 @@
 import { createClient } from "@supabase/supabase-js"
 
 // Get environment variables with fallbacks
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || ""
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || ""
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ""
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ""
+const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || ""
 
-// Create client only if both variables exist
+// Create clients with proper typing
 let supabase: ReturnType<typeof createClient> | null = null
+let supabaseAdmin: ReturnType<typeof createClient> | null = null
 
 if (supabaseUrl && supabaseAnonKey) {
   try {
-    supabase = createClient(supabaseUrl, supabaseAnonKey)
+    supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true,
+      },
+      global: {
+        headers: {
+          'X-Client-Info': 'standards-app'
+        }
+      }
+    })
   } catch (error) {
     console.error("Failed to create Supabase client:", error)
     supabase = null
   }
-} else {
-  // Only warn in development, not in production builds
-  if (process.env.NODE_ENV === "development") {
-    console.warn(
-      "Supabase environment variables not configured. Please add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to your environment variables.",
-    )
+}
+
+if (supabaseUrl && supabaseServiceRoleKey) {
+  try {
+    supabaseAdmin = createClient(supabaseUrl, supabaseServiceRoleKey, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false
+      }
+    })
+  } catch (error) {
+    console.error("Failed to create Supabase admin client:", error)
+    supabaseAdmin = null
   }
 }
 
-export { supabase }
-
-// Server-side client
-export const createServerClient = () => {
-  const serverUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL
-  const serverKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-
-  if (!serverUrl || !serverKey) {
+// Server-side client with proper typing
+export const createServerClient = (accessToken?: string) => {
+  if (!supabaseUrl || !supabaseAnonKey) {
     if (process.env.NODE_ENV === "development") {
       console.error("Missing Supabase server configuration")
     }
@@ -38,14 +53,36 @@ export const createServerClient = () => {
   }
 
   try {
-    return createClient(serverUrl, serverKey)
+    const options = {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false
+      }
+    }
+
+    const client = createClient(supabaseUrl, supabaseAnonKey, options)
+
+    if (accessToken) {
+      client.auth.setAuth(accessToken)
+    }
+
+    return client
   } catch (error) {
     console.error("Failed to create Supabase server client:", error)
     return null
   }
 }
 
-// Helper function to check if Supabase is configured
+// Helper functions
 export const isSupabaseConfigured = () => {
   return !!(supabaseUrl && supabaseAnonKey && supabase)
 }
+
+export const getServiceRoleClient = () => {
+  if (!supabaseAdmin) {
+    throw new Error("Service role client not initialized")
+  }
+  return supabaseAdmin
+}
+
+export { supabase }
