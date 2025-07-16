@@ -3,9 +3,9 @@
 ### Current features:
 - [ ] Main page
 - [ ] Wiki
-- [] Authentication
+- [ ] Authentication
     - [x] Basic Auth
-    - [] Discord Auth
+    - [ ] Discord Auth
 - [ ] Admin roles
 
 ### Contributing
