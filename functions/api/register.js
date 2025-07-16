@@ -23,10 +23,8 @@ export async function onRequest(context) {
             return new Response("Bad JSON", { status: 400 });
         }
 
-        const {
-            username,
-            password,
-        } = data;
+
+        const { action, username, password } = data;
 
         if (action !== "register") {
             return new Response(
@@ -61,30 +59,11 @@ export async function onRequest(context) {
         // Hash the password
         const hashed = await hashPassword(password);
 
-        // Insert into users, now including latitude & longitude
+        // Insert only username and hashed password
         await env.DB.prepare(
-            `INSERT INTO users
-              (email, password, fname, lname, age,
-               gender, seeking, country, city,
-               latitude, longitude${bio ? ", bio" : ""})
-             VALUES (?, ?, ?, ?, ?,
-                     ?, ?, ?, ?,
-                     ?, ?${bio ? ", ?" : ""})`
+            `INSERT INTO users (username, password) VALUES (?, ?)`
         )
-        .bind(
-            email,
-            hashed,
-            fname,
-            lname,
-            age,
-            gender,
-            seeking,
-            country,
-            city,
-            lat,
-            lng,
-            ...(bio ? [bio] : [])
-        )
+        .bind(username, hashed)
         .run();
 
         return new Response(

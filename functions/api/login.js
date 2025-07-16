@@ -25,7 +25,7 @@ export async function onRequest(context) {
   
         const {
             action,
-            email,
+            username,
             password,
         } = data;
         
@@ -38,11 +38,11 @@ export async function onRequest(context) {
         
         if (action === "login") {
             const user = await env.DB.prepare(
-            "SELECT email, password FROM users WHERE email = ?"
-            ).bind(email).first();
+            "SELECT username, password FROM users WHERE username = ?"
+            ).bind(username).first();
             
             if (!user) {
-            return new Response(JSON.stringify({ error: "Email not found" }), {
+            return new Response(JSON.stringify({ error: "Username not found" }), {
                 status: 404,
                 headers: { "Content-Type": "application/json" },
             });
@@ -59,7 +59,7 @@ export async function onRequest(context) {
             const cookieOptions = "Path=/; Max-Age=2592000; SameSite=None; Secure;";
             const headers = new Headers();
             headers.set("Content-Type", "application/json");
-            headers.append("Set-Cookie", `email=${encodeURIComponent(email)}; ${cookieOptions}`);
+            headers.append("Set-Cookie", `username=${encodeURIComponent(username)}; ${cookieOptions}`);
             headers.append("Set-Cookie", `password=${user.password}; ${cookieOptions}`);
             
             return new Response(JSON.stringify({
@@ -68,4 +68,6 @@ export async function onRequest(context) {
             }), { status: 200, headers });      
         }
     }
+
+    return new Response("Method not allowed", { status: 405 });
 }

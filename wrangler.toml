@@ -1,9 +1,0 @@
-
-name            = "community-web"
-account_id      = "e6aba92e9aa0421804f64f17b0e07e26"
-compatibility_date = "2025-07-16"
-
-[dev]
-ip             = "127.0.0.1"
-port           = 8788
-local_protocol = "https"
