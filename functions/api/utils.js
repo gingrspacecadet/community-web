@@ -26,3 +26,25 @@ export async function hashPassword(pw) {
         .map((b) => b.toString(16).padStart(2, "0"))
         .join("");
 }
+
+// Insert a new component into the components table
+export async function insertComponent(component, env) {
+    // component: { name, description, data, user_id }
+    const stmt = env.DB.prepare(`
+        INSERT INTO components (name, description, data, user_id)
+        VALUES (?, ?, ?, ?)
+    `);
+    await stmt.bind(
+        component.name,
+        component.description || '',
+        component.data,
+        component.user_id || null
+    ).run();
+}
+
+// Get all components from the components table
+export async function getAllComponents(env) {
+    const stmt = env.DB.prepare('SELECT * FROM components ORDER BY created_at DESC');
+    const { results } = await stmt.all();
+    return results;
+}
