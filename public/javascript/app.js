@@ -17,6 +17,36 @@ document.addEventListener('DOMContentLoaded', () => {
         data.components.forEach(comp => {
           const li = document.createElement('li');
           li.innerHTML = `<strong>${comp.name}</strong> <small>(${comp.created_at})</small><br/><em>${comp.description || ''}</em>`;
+
+          // Download button
+          const downloadBtn = document.createElement('button');
+          downloadBtn.textContent = 'Download';
+          downloadBtn.style.marginLeft = '1em';
+          downloadBtn.addEventListener('click', () => {
+            // Decode base64 to binary and trigger download
+            const base64 = comp.data || '';
+            if (!base64) {
+              alert('No file data available.');
+              return;
+            }
+            const binary = atob(base64);
+            const bytes = new Uint8Array(binary.length);
+            for (let i = 0; i < binary.length; i++) {
+              bytes[i] = binary.charCodeAt(i);
+            }
+            const blob = new Blob([bytes]);
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = comp.name;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => {
+              document.body.removeChild(a);
+              URL.revokeObjectURL(url);
+            }, 100);
+          });
+          li.appendChild(downloadBtn);
           list.appendChild(li);
         });
         container.appendChild(list);
