@@ -1,5 +1,12 @@
 // app.js - Handles frontend file upload logic
 document.addEventListener('DOMContentLoaded', () => {
+  // Helper to get cookie value by name
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return '';
+  }
   const uploadForm = document.getElementById('uploadForm');
   const fileInput = document.getElementById('fileInput');
   const descriptionInput = document.getElementById('descriptionInput');
@@ -16,14 +23,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const list = document.createElement('ul');
         data.components.forEach(comp => {
           const li = document.createElement('li');
-          li.innerHTML = `<strong>${comp.name}</strong> <small>(${comp.created_at})</small><br/><em>${comp.description || ''}</em>`;
+          let userDisplay = comp.username ? `<span style="color:#888">by ${comp.username}</span><br/>` : '';
+          li.innerHTML = `<strong>${comp.name}</strong> <small>(${comp.created_at})</small><br/>${userDisplay}<em>${comp.description || ''}</em>`;
 
           // Download button
           const downloadBtn = document.createElement('button');
           downloadBtn.textContent = 'Download';
           downloadBtn.style.marginLeft = '1em';
           downloadBtn.addEventListener('click', () => {
-            // Decode base64 to binary and trigger download
             const base64 = comp.data || '';
             if (!base64) {
               alert('No file data available.');
@@ -47,6 +54,39 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 100);
           });
           li.appendChild(downloadBtn);
+
+          // Copy button
+          const copyBtn = document.createElement('button');
+          copyBtn.textContent = 'Copy';
+          copyBtn.style.marginLeft = '0.5em';
+          copyBtn.addEventListener('click', async () => {
+            const base64 = comp.data || '';
+            if (!base64) {
+              alert('No file data available.');
+              return;
+            }
+            // Try binary clipboard, fallback to base64 string
+            try {
+              const binary = atob(base64);
+              const bytes = new Uint8Array(binary.length);
+              for (let i = 0; i < binary.length; i++) {
+                bytes[i] = binary.charCodeAt(i);
+              }
+              await navigator.clipboard.write([
+                new ClipboardItem({ 'application/octet-stream': new Blob([bytes]) })
+              ]);
+              alert('File data copied to clipboard!');
+            } catch (err) {
+              // Fallback: copy base64 string
+              try {
+                await navigator.clipboard.writeText(base64);
+                alert('Base64 data copied to clipboard!');
+              } catch (err2) {
+                alert('Failed to copy: ' + err2);
+              }
+            }
+          });
+          li.appendChild(copyBtn);
           list.appendChild(li);
         });
         container.appendChild(list);
@@ -83,6 +123,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const formData = new FormData();
     formData.append('fileInput', file);
     formData.append('descriptionInput', description);
+    // Attach username from cookies if present
+    const username = getCookie('username');
+    if (username) {
+      formData.append('username', username);
+    }
 
     try {
       const response = await fetch('/api/components/upload', {

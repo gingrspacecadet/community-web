@@ -29,14 +29,19 @@ export async function hashPassword(pw) {
 
 // Insert a new component into the components table
 export async function insertComponent(component, env) {
-    // component: { name, description, data, user_id }
+    // component: { name, description, data, user_id, username }
+    // Store username in description if not in schema
+    let desc = component.description || '';
+    if (component.username) {
+        desc = `[user:${component.username}] ` + desc;
+    }
     const stmt = env.DB.prepare(`
         INSERT INTO components (name, description, data, user_id)
         VALUES (?, ?, ?, ?)
     `);
     await stmt.bind(
         component.name,
-        component.description || '',
+        desc,
         component.data,
         component.user_id || null
     ).run();
@@ -46,5 +51,15 @@ export async function insertComponent(component, env) {
 export async function getAllComponents(env) {
     const stmt = env.DB.prepare('SELECT * FROM components ORDER BY created_at DESC');
     const { results } = await stmt.all();
-    return results;
+    // Extract username from description if present
+    return results.map(comp => {
+        let username = '';
+        let desc = comp.description || '';
+        const match = desc.match(/^\[user:([^\]]+)\] ?(.*)$/);
+        if (match) {
+            username = match[1];
+            desc = match[2];
+        }
+        return { ...comp, username, description: desc };
+    });
 }

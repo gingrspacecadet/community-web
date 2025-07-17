@@ -10,6 +10,7 @@ export async function onRequestPost(context) {
 
   const userId = context.user?.id || null; // Adjust as needed for your auth
   const description = formData.get('descriptionInput')?.toString().trim() || '';
+  const username = formData.get('username')?.toString().trim() || null;
 
   if (!file) {
     return new Response(JSON.stringify({ error: 'No file uploaded.' }), { status: 400 });
@@ -36,6 +37,7 @@ export async function onRequestPost(context) {
     description,
     data: base64Data,
     user_id: userId,
+    username,
   };
 
   try {
