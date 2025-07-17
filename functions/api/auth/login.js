@@ -1,4 +1,4 @@
-import { verifyPassword } from "../utils.js";
+import { verifyPassword } from "@/functions/utils.js";
 
 export async function onRequest(context) {
     const { request, env } = context;
