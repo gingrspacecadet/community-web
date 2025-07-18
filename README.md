@@ -1,16 +1,13 @@
 # Welcome to the bigstone community web!
+### We like people to contribute stuff (dont play around with database / api,)
 
-### Current features:
+Local start up:
+```wrangler pages dev public```
+
+Functions right now:
 - [ ] Main page
 - [ ] Wiki
-- [ ] Authentication
+- [x] Authentication
     - [x] Basic Auth
-    - [ ] Discord Auth
+    - [x] Discord Auth
 - [ ] Admin roles
-
-### Contributing
-Anyone can contribute! We have a few ground rules though:
-
-- Minimal commenting
-- [Semantic Commit Messages](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716)
-- NO FRAMEWORKS
