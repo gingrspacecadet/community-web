@@ -1,20 +1,3 @@
-export async function getUserFromCookies(request, env) {
-    const cookieHeader = request.headers.get("Cookie") || "";
-    const cookies = Object.fromEntries(cookieHeader.split("; ").map(c => c.split("=")));
-
-    const email = decodeURIComponent(cookies.email || "");
-    const storedHash = cookies.password || "";
-
-    if (!email || !storedHash) return null;
-
-    const user = await env.DB.prepare("SELECT * FROM users WHERE email = ?")
-        .bind(email).first();
-
-    if (!user || user.password !== storedHash) return null;
-
-    return user;
-}
-
 export async function verifyPassword(input, stored) {
     return (await hashPassword(input)) === stored;
 }
