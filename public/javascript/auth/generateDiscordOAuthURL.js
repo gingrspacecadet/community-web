@@ -1,10 +1,8 @@
-// functions/api/auth/generateDiscordOAuthURL.js
-function generateDiscordOAuthURL(redirectURI) {
-  const clientId = '1391809353933127810';
+// path/to: public/javascript/auth/generateDiscordOAuthURL.js
+export function generateDiscordOAuthURL(clientId, redirectURI) {
   const responseType = 'code';
   const scope = 'identify';
 
-  // Log the details
   console.log('Generating Discord OAuth URL with:');
   console.log('Scope:', scope);
   console.log('Redirect URL:', redirectURI);
