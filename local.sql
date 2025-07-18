@@ -11,7 +11,7 @@ CREATE TABLE components (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL,
   description TEXT,
-  tags TEXT, -- comma-separated tags
+  tags TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   data TEXT,
