@@ -1,9 +1,26 @@
-async function getOAuthConfig() {
-  const res = await fetch('/api/auth/config');
-  if (!res.ok) {
+async function getOAuthConfig(request) {
+  // Construct the full URL using the incoming request's URL
+  const url = new URL('/api/auth/config', new URL(request.url).origin);
+  const response = await fetch(url.toString());
+  
+  if (!response.ok) {
     throw new Error('Failed to load OAuth config');
   }
-  return await res.json();
+  return response.json();
+}
+
+export async function onRequestGet(context) {
+  const { request } = context;
+  
+  try {
+    const config = await getOAuthConfig(request);
+    // Process the config and return a response
+    return new Response(JSON.stringify(config), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+  } catch (error) {
+    return new Response(error.message, { status: 500 });
+  }
 }
 
 export async function onRequestGet(context) {
@@ -16,26 +33,17 @@ export async function onRequestGet(context) {
     return new Response('No code provided', { status: 400 });
   }
 
-  // Get the OAuth config
-  let oauthConfig;
-  try {
-    oauthConfig = await getOAuthConfig();
-  } catch (error) {
-    return new Response('Failed to load OAuth configuration', { status: 500 });
-  }
+  const { client_id, redirect_uri } = await getOAuthConfig();
 
-  const { client_id, client_secret, redirect_uri } = oauthConfig;
-
-  // Exchange the code for a token
   const tokenResponse = await fetch('https://discord.com/api/oauth2/token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({
-      client_id: client_id || env.DISCORD_CLIENT_ID,
-      client_secret: client_secret || env.DISCORD_CLIENT_SECRET,
+      client_id,
+      client_secret: env.DISCORD_CLIENT_SECRET,
       grant_type: 'authorization_code',
       code,
-      redirect_uri: redirect_uri,
+      redirect_uri,
     }),
   });
 
@@ -45,11 +53,9 @@ export async function onRequestGet(context) {
     return new Response('Token exchange failed: ' + JSON.stringify(tokenData), { 
       status: 400,
       headers: { 'Content-Type': 'application/json' }
-    }
-  );
+    });
   }
 
-  // Fetch user info
   const userResponse = await fetch('https://discord.com/api/users/@me', {
     headers: { Authorization: `Bearer ${tokenData.access_token}` },
   });
@@ -64,3 +70,4 @@ export async function onRequestGet(context) {
     headers: { 'Content-Type': 'application/json' },
   });
 }
+
