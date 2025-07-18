@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const uploadForm = document.getElementById('uploadForm');
   const fileInput = document.getElementById('fileInput');
   const descriptionInput = document.getElementById('descriptionInput');
+  const tagsInput = document.getElementById('tagsInput');
   const container = document.createElement('div');
   container.className = 'components-list';
   document.querySelector('.app-container').appendChild(container);
@@ -21,10 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await res.json();
       if (data.components && data.components.length > 0) {
         const list = document.createElement('ul');
-        data.components.forEach(comp => {
-          const li = document.createElement('li');
-          let userDisplay = comp.username ? `<span style="color:#888">by ${comp.username}</span><br/>` : '';
-          li.innerHTML = `<strong>${comp.name}</strong> <small>(${comp.created_at})</small><br/>${userDisplay}<em>${comp.description || ''}</em>`;
+    data.components.forEach(comp => {
+      const li = document.createElement('li');
+      let userDisplay = comp.username ? `<span style="color:#888">by ${comp.username}</span><br/>` : '';
+      let tagsDisplay = (comp.tags && comp.tags.length)
+        ? `<div class="tags-list">${comp.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}</div>`
+        : '';
+      li.innerHTML = `<strong>${comp.name}</strong> <small>(${comp.created_at})</small><br/>${userDisplay}<em>${comp.description || ''}</em>${tagsDisplay}`;
 
           // Download button
           const downloadBtn = document.createElement('button');
@@ -102,6 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     const file = fileInput.files[0];
     const description = descriptionInput.value.trim();
+    const tags = tagsInput.value.trim();
 
     if (!file) {
       alert('Please select a file to upload.');
@@ -123,6 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const formData = new FormData();
     formData.append('fileInput', file);
     formData.append('descriptionInput', description);
+    formData.append('tagsInput', tags);
     // Attach username from cookies if present
     const username = getCookie('username');
     if (username) {
@@ -139,6 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('File uploaded successfully!');
         fileInput.value = '';
         descriptionInput.value = '';
+        tagsInput.value = '';
         fetchAndDisplayComponents();
       } else {
         alert('Upload failed: ' + (result.error || 'Unknown error'));

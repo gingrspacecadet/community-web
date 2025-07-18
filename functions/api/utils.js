@@ -29,19 +29,21 @@ export async function hashPassword(pw) {
 
 // Insert a new component into the components table
 export async function insertComponent(component, env) {
-    // component: { name, description, data, user_id, username }
+    // component: { name, description, data, user_id, username, tags }
     // Store username in description if not in schema
     let desc = component.description || '';
     if (component.username) {
         desc = `[user:${component.username}] ` + desc;
     }
+    const tags = Array.isArray(component.tags) ? component.tags.join(',') : (component.tags || '');
     const stmt = env.DB.prepare(`
-        INSERT INTO components (name, description, data, user_id)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO components (name, description, tags, data, user_id)
+        VALUES (?, ?, ?, ?, ?)
     `);
     await stmt.bind(
         component.name,
         desc,
+        tags,
         component.data,
         component.user_id || null
     ).run();
@@ -51,7 +53,7 @@ export async function insertComponent(component, env) {
 export async function getAllComponents(env) {
     const stmt = env.DB.prepare('SELECT * FROM components ORDER BY created_at DESC');
     const { results } = await stmt.all();
-    // Extract username from description if present
+    // Extract username from description if present, and split tags
     return results.map(comp => {
         let username = '';
         let desc = comp.description || '';
@@ -60,6 +62,10 @@ export async function getAllComponents(env) {
             username = match[1];
             desc = match[2];
         }
-        return { ...comp, username, description: desc };
+        let tags = [];
+        if (comp.tags) {
+            tags = comp.tags.split(',').map(t => t.trim()).filter(Boolean);
+        }
+        return { ...comp, username, description: desc, tags };
     });
 }

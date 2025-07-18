@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin SQL Executor</title>
+  <link rel="stylesheet" href="../styles.css"/>
+</head>
+<body>
+  <header>
+    <h1>Admin SQL Executor</h1>
+  </header>
+  <main>
+    <form id="adminSqlForm">
+      <label for="sql">SQL Statement:</label>
+      <textarea id="sql" name="sql" required placeholder="Enter SQL statement..."></textarea>
+      <button type="submit">Execute</button>
+    </form>
+    <pre id="result" style="margin-top:2em;"></pre>
+  </main>
+  <footer>
+    <p>&copy; 2025 BigstoneDevelopment. All rights reserved.</p>
+  </footer>
+  <script src="../javascript/admin.js"></script>
+</body>
+</html>
