@@ -5,20 +5,20 @@ export async function onRequest(context) {
     const { method } = request;
   
     if (method === "OPTIONS") {
-      return new Response(null, { status: 204 });
+        return new Response(null, { status: 204 });
     }
   
     if (!env.DB) {
-      return new Response(JSON.stringify({ error: "DB not configured" }), {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      });
+        return new Response(JSON.stringify({ error: "DB not configured" }), {
+            status: 500,
+            headers: { "Content-Type": "application/json" },
+         });
     }
 
     if (method === "POST") {
         let data;
         try {
-           data = await request.json();
+            data = await request.json();
         } catch {
             return new Response("Bad JSON", { status: 400 });
         }
