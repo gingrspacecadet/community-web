@@ -1,18 +1,20 @@
-// path/to: public/javascript/auth/generateDiscordOAuthURL.js
+// generateDiscordOAuthURL.js
 export function generateDiscordOAuthURL(clientId, redirectURI) {
   const responseType = 'code';
   const scope = 'identify';
+  const base = 'https://discord.com/oauth2/authorize';
 
-  console.log('Generating Discord OAuth URL with:');
-  console.log('Scope:', scope);
-  console.log('Redirect URL:', redirectURI);
-  console.log('Client ID:', clientId);
-
-  const url = new URL('https://discord.com/oauth2/authorize');
+  const url = new URL(base);
   url.searchParams.set('client_id', clientId);
-  url.searchParams.set('response_type', responseType);
   url.searchParams.set('redirect_uri', redirectURI);
+  url.searchParams.set('response_type', responseType);
   url.searchParams.set('scope', scope);
+
+  console.log(`Discord OAuth URL: ${url.toString()}`);
+  console.log(`Client ID: ${clientId}`);
+  console.log(`Redirect URI: ${redirectURI}`);
+  console.log(`Response Type: ${responseType}`);
+  console.log(`Scope: ${scope}`);
 
   return url.toString();
 }
