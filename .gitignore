@@ -1,3 +1,9 @@
+# Node modules directory
 /node_modules
+
+# Wrangler cache directory
 /.wrangler
+
 package*
+# Environment variables file
+.env
