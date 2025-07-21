@@ -33,13 +33,31 @@ export async function onRequestPost(context) {
   }
   const base64Data = arrayBufferToBase64(arrayBuffer);
 
+  // Get username from authToken cookie by looking up in DB if not provided
+  let finalUsername = username;
+  if (!finalUsername) {
+    const cookieHeader = request.headers.get('cookie') || '';
+    const authTokenMatch = cookieHeader.match(/authToken=([^;]+)/);
+    const authToken = authTokenMatch ? authTokenMatch[1] : null;
+    if (authToken && context.env && typeof context.env.DB?.prepare === 'function') {
+      try {
+        const user = await context.env.DB.prepare('SELECT username FROM users WHERE auth_token = ?').bind(authToken).first();
+        if (user && user.username) {
+          finalUsername = user.username;
+        }
+      } catch (err) {
+        return new Response(JSON.stringify({ error: 'Failed to look up username from auth token.' }), { status: 500 });
+      }
+    }
+  }
+
   // Store file metadata and data in DB (data as base64 string)
   const component = {
     name: file.name,
     description,
     data: base64Data,
     user_id: userId,
-    username,
+    username: finalUsername,
     tags,
   };
 
