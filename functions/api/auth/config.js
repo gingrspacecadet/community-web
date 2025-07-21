@@ -12,7 +12,7 @@ export async function onRequestGet(context) {
         client_id: env.DISCORD_CLIENT_ID,
         client_secret: env.DISCORD_CLIENT_SECRET,
         redirect_uri: env.DISCORD_REDIRECT_URI,
-        cookies: enable_cookies === "false" ? "Secure; " : ""
+        cookies: enable_cookies === "true" ? "Secure; " : ""
     }), {
         headers: { 'Content-Type': 'application/json' },
 });
