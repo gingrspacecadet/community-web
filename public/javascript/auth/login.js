@@ -11,7 +11,7 @@ async function getOAuthConfig() {
 document.getElementById('loginBtn').addEventListener('click', async () => {
   try {
     const { client_id, redirect_uri } = await getOAuthConfig();
-    const oauthUrl = generateDiscordOAuthURL(client_id, redirect_uri);
+    const oauthUrl = generateDiscordOAuthURL(client_id, window.location.origin + redirect_uri);
     console.log('Redirecting to OAuth URL:', oauthUrl);
     window.location.href = oauthUrl;
   } catch (e) {
