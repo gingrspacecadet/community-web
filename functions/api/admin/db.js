@@ -1,5 +1,5 @@
 // db.js - Admin endpoint to execute SQL if username is authorized
-const AUTHORIZED_USERS = ['admin', 'test', 'gingrspacecadet'];
+const AUTHORIZED_USERS = ['_justparrot', 'thehuckle', 'gingrspacecadet'];
 
 export async function onRequestPost(context) {
   const { request, env } = context;
