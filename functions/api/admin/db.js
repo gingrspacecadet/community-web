@@ -23,7 +23,7 @@ export async function onRequestPost(context) {
     return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 403 });
   }
   try {
-    const result = await env.DB.exec(sql);
+    const result = await env.DB.prepare(sql).all();
     return new Response(JSON.stringify({ success: true, result }), { status: 200 });
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), { status: 500 });
