@@ -8,15 +8,21 @@ async function getOAuthConfig() {
   return await res.json();
 }
 
-document.getElementById('loginBtn').addEventListener('click', async () => {
-  try {
-    const { client_id, redirect_uri } = await getOAuthConfig();
-    const oauthUrl = generateDiscordOAuthURL(client_id, window.location.origin + redirect_uri);
-    console.log('Redirecting to OAuth URL:', oauthUrl);
-    window.location.href = oauthUrl;
-  } catch (e) {
-    console.error('OAuth login failed', e);
+document.addEventListener('DOMContentLoaded', () => {
+  const button = document.getElementById('loginBtn');
+  if (!button) {
+    console.error('No #loginBtn found');
+    return;
   }
+
+  button.addEventListener('click', async () => {
+    try {
+      const { client_id, redirect_uri } = await getOAuthConfig();
+      const oauthUrl = generateDiscordOAuthURL(client_id, redirect_uri);
+      console.log('Redirecting to:', oauthUrl);
+      window.location.href = oauthUrl;
+    } catch (e) {
+      console.error('OAuth login failed:', e);
+    }
+  });
 });
-
-
