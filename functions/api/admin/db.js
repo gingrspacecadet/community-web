@@ -23,7 +23,13 @@ export async function onRequestPost(context) {
     return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 403 });
   }
   try {
-    const result = await env.DB.prepare(sql).all();
+    // Use .run() for non-SELECT, .all() for SELECT
+    let result;
+    if (/^\s*select/i.test(sql)) {
+      result = await env.DB.prepare(sql).all();
+    } else {
+      result = await env.DB.prepare(sql).run();
+    }
     return new Response(JSON.stringify({ success: true, result }), { status: 200 });
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), { status: 500 });
