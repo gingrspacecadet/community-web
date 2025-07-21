@@ -20,7 +20,8 @@ export async function onRequestGet(context) {
     const config = await getOAuthConfig(request);
     client_id = config.client_id;
     client_secret = env.DISCORD_CLIENT_SECRET;
-    redirect_uri = window.location.origin + config.redirect_uri;
+    const origin = new URL(request.url).origin;
+    redirect_uri = origin + config.redirect_uri;
   } catch (e) {
     return new Response('Failed to get OAuth config: ' + e.message, { status: 500 });
   }
