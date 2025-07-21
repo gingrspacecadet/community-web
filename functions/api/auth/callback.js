@@ -66,11 +66,23 @@ export async function onRequestGet(context) {
 
   const userData = await userResponse.json();
 
+  // Store username and auth token in env.DB using SQL
+  if (env.DB && typeof env.DB.prepare === 'function') {
+    try {
+      const stmt = env.DB.prepare(
+        'INSERT OR REPLACE INTO users (id, username, auth_token) VALUES (?, ?, ?)'
+      ).bind(userData.id, userData.username, tokenData.access_token);
+      await stmt.run();
+    } catch (err) {
+      return new Response('Failed to store user data: ' + err.message, { status: 500 });
+    }
+  }
+
   const config = await getOAuthConfig(request);
   return new Response(null, {
     status: 302,
     headers: {
-      'Set-Cookie': `authToken=${tokenData.access_token}; Path=/; HttpOnly; ${config.cookies}SameSite=Lax; Max-Age=86400`,
+      'Set-Cookie': `authToken=${tokenData.access_token}; Path=/; HttpOnly; ${config.cookies}SameSite=Lax; Max-Age=86400, username=${encodeURIComponent(userData.username)}; Path=/; SameSite=Lax; Max-Age=86400`,
       'Location': '/pages/app'
     }
   });
