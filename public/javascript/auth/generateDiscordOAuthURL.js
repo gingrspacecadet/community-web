@@ -2,7 +2,7 @@
 export function generateDiscordOAuthURL(clientId, redirectURI) {
   const responseType = 'code';
   const scope = 'identify';
-  const base = 'https:
+  const base = 'https://discord.com/oauth2/authorize';
 
   const url = new URL(base);
   url.searchParams.set('client_id', clientId);
