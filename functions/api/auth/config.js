@@ -1,7 +1,7 @@
 export async function onRequestGet(context) {
     const { env } = context;
     const enable_local_cookies = "true"; // this should be set
-    const redirect_uri = 'http://localhost:8788/api/auth/callback';//'https://community-web-7zs.pages.dev/api/auth/callback';
+    const redirect_uri = 'https://community-web-7zs.pages.dev/api/auth/callback';
 
     console.log({
         client_id: env.DISCORD_CLIENT_ID,
