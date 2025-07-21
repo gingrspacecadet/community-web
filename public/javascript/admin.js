@@ -8,16 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const sql = sqlInput.value.trim();
-    // No password, use authToken from cookie
-    function getCookie(name) {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop().split(';').shift();
-      return '';
-    }
-    const authToken = getCookie('authToken');
-    if (!authToken || !sql) {
-      resultPre.textContent = 'Auth token (from cookie) and SQL are required.';
+    // No need to check for authToken here, server will check
+    if (!sql) {
+      resultPre.textContent = 'SQL is required.';
       return;
     }
     resultPre.textContent = 'Executing...';
