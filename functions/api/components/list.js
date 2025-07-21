@@ -1,4 +1,4 @@
-// list.js - Returns all uploaded components as JSON
+
 import { getAllComponents } from '../utils.js';
 
 export async function onRequestGet(context) {

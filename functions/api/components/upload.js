@@ -1,5 +1,5 @@
-// upload.js - Handles file uploads and stores metadata in the database
-// Backend logic for handling uploads (Cloudflare Workers/Node.js style)
+
+
 
 import { insertComponent } from '../utils.js';
 
@@ -8,7 +8,7 @@ export async function onRequestPost(context) {
   const formData = await request.formData();
   const file = formData.get('fileInput');
 
-  const userId = context.user?.id || null; // Adjust as needed for your auth
+  const userId = context.user?.id || null; 
   const description = formData.get('descriptionInput')?.toString().trim() || '';
   if (description.length > 1024) {
     return new Response(JSON.stringify({ error: 'Description must be 1024 characters or less.' }), { status: 400 });
@@ -24,7 +24,7 @@ export async function onRequestPost(context) {
     return new Response(JSON.stringify({ error: 'No file uploaded.' }), { status: 400 });
   }
 
-  // Read file as ArrayBuffer and encode to base64 (browser/worker compatible)
+  
   const arrayBuffer = await file.arrayBuffer();
   function arrayBufferToBase64(buffer) {
     let binary = '';
@@ -36,7 +36,7 @@ export async function onRequestPost(context) {
   }
   const base64Data = arrayBufferToBase64(arrayBuffer);
 
-  // Get username from authToken cookie by looking up in DB if not provided
+  
   let finalUsername = username;
   if (!finalUsername) {
     const cookieHeader = request.headers.get('cookie') || '';
@@ -54,7 +54,7 @@ export async function onRequestPost(context) {
     }
   }
 
-  // Store file metadata and data in DB (data as base64 string)
+  
   const component = {
     name: file.name,
     description,

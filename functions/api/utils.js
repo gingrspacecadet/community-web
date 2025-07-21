@@ -10,10 +10,10 @@ export async function hashPassword(pw) {
         .join("");
 }
 
-// Insert a new component into the components table
+
 export async function insertComponent(component, env) {
-    // component: { name, description, data, user_id, username, tags }
-    // Store username in description if not in schema
+    
+    
     let desc = component.description || '';
     if (component.username) {
         desc = `[user:${component.username}] ` + desc;
@@ -32,11 +32,11 @@ export async function insertComponent(component, env) {
     ).run();
 }
 
-// Get all components from the components table
+
 export async function getAllComponents(env) {
     const stmt = env.DB.prepare('SELECT * FROM components ORDER BY created_at DESC');
     const { results } = await stmt.all();
-    // Extract username from description if present, and split tags
+    
     return results.map(comp => {
         let username = '';
         let desc = comp.description || '';

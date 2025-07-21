@@ -1,6 +1,6 @@
-// app.js - Handles frontend file upload logic
+
 document.addEventListener('DOMContentLoaded', () => {
-  // Helper to get cookie value by name
+  
   function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         : '';
       li.innerHTML = `<strong>${comp.name}</strong> <small>(${comp.created_at})</small><br/>${userDisplay}<em>${comp.description || ''}</em>${tagsDisplay}`;
 
-          // Download button
+          
           const downloadBtn = document.createElement('button');
           downloadBtn.textContent = 'Download';
           downloadBtn.style.marginLeft = '1em';
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
           });
           li.appendChild(downloadBtn);
 
-          // Copy button
+          
           const copyBtn = document.createElement('button');
           copyBtn.textContent = 'Copy';
           copyBtn.style.marginLeft = '0.5em';
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
               alert('No file data available.');
               return;
             }
-            // Try binary clipboard, fallback to base64 string
+            
             try {
               const binary = atob(base64);
               const bytes = new Uint8Array(binary.length);
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
               ]);
               alert('File data copied to clipboard!');
             } catch (err) {
-              // Fallback: copy base64 string
+              
               try {
                 await navigator.clipboard.writeText(base64);
                 alert('Base64 data copied to clipboard!');
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Validate file extension
+    
     const allowedExt = ['.nbt', '.bp', '.schem'];
     const fileName = file.name.toLowerCase();
     if (!allowedExt.some(ext => fileName.endsWith(ext))) {
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     formData.append('fileInput', file);
     formData.append('descriptionInput', description);
     formData.append('tagsInput', tags);
-    // Attach username from cookies if present
+    
     const username = getCookie('username');
     if (username) {
       formData.append('username', username);

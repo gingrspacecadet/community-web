@@ -1,4 +1,4 @@
-// admin.js - Frontend for admin SQL executor
+
 
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('adminSqlForm');
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const sql = sqlInput.value.trim();
-    // No need to check for authToken here, server will check
+    
     if (!sql) {
       resultPre.textContent = 'SQL is required.';
       return;

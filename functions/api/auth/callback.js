@@ -66,7 +66,7 @@ export async function onRequestGet(context) {
 
   const userData = await userResponse.json();
 
-  // Store username and auth token in env.DB using SQL
+  
   if (env.DB && typeof env.DB.prepare === 'function') {
     try {
       const stmt = env.DB.prepare(

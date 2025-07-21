@@ -8,14 +8,14 @@
     <h2 id="errorDescription">An error occurred</h2>
 
     <script>
-        // Get URL parameters
+        
         const params = new URLSearchParams(window.location.search);
         
-        // Set error code if provided (default to 500)
+        
         const errorCode = params.get('code') || '500';
         document.getElementById('errorCode').textContent = `${errorCode} Error`;
         
-        // Set description if provided
+        
         const errorDesc = params.get('desc') || 'Something went wrong';
         document.getElementById('errorDescription').textContent = errorDesc;
     </script>

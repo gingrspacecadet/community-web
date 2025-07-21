@@ -1,4 +1,3 @@
-// db.js - Admin endpoint to execute SQL if username is authorized
 const AUTHORIZED_USERS = ['_justparrot', 'thehuckle', 'gingrspacecadet'];
 
 export async function onRequestPost(context) {
@@ -10,20 +9,17 @@ export async function onRequestPost(context) {
     return new Response(JSON.stringify({ error: 'Invalid JSON' }), { status: 400 });
   }
   const { sql } = data;
-  // Get authToken from cookies
   const cookieHeader = request.headers.get('cookie') || '';
   const authTokenMatch = cookieHeader.match(/authToken=([^;]+)/);
   const authToken = authTokenMatch ? authTokenMatch[1] : null;
   if (!authToken || !sql) {
     return new Response(JSON.stringify({ error: 'Missing auth token or sql' }), { status: 400 });
   }
-  // Find user by auth token
   const user = await env.DB.prepare('SELECT username FROM users WHERE auth_token = ?').bind(authToken).first();
   if (!user || !AUTHORIZED_USERS.includes(user.username)) {
     return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 403 });
   }
   try {
-    // Use .run() for non-SELECT, .all() for SELECT
     let result;
     result = await env.DB.prepare(sql).run();
     return new Response(JSON.stringify({ success: true, result }), { status: 200 });
