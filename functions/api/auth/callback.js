@@ -6,8 +6,8 @@ async function getOAuthConfig(request) {
   return await res.json();
 }
 
-export async function onRequestGet(context, env) {
-  const { request } = context;
+export async function onRequestGet(context) {
+  const { request, env } = context;
   const url = new URL(request.url);
   const code = url.searchParams.get('code');
 
