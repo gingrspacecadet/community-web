@@ -10,15 +10,18 @@ export async function onRequestPost(context) {
 
   const userId = context.user?.id || null; // Adjust as needed for your auth
   const description = formData.get('descriptionInput')?.toString().trim() || '';
+  if (description.length > 1024) {
+    return new Response(JSON.stringify({ error: 'Description must be 1024 characters or less.' }), { status: 400 });
+  }
   const username = formData.get('username')?.toString().trim() || null;
   const tagsRaw = formData.get('tagsInput')?.toString().trim() || '';
+  if (tagsRaw.length > 1024) {
+    return new Response(JSON.stringify({ error: 'Tags must be 1024 characters or less.' }), { status: 400 });
+  }
   const tags = tagsRaw.split(',').map(t => t.trim()).filter(Boolean);
 
   if (!file) {
     return new Response(JSON.stringify({ error: 'No file uploaded.' }), { status: 400 });
-  }
-  if (!description) {
-    return new Response(JSON.stringify({ error: 'Description is required.' }), { status: 400 });
   }
 
   // Read file as ArrayBuffer and encode to base64 (browser/worker compatible)
