@@ -147,5 +147,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  async function isAdmin() {
+    const username = getCookie("username");
+    const admins = ['_justparrot', 'thehuckle', 'gingrspacecadet'];
+    return admins.includes(username);
+  }
+
+  async function renderAdminLink() {
+    if (await isAdmin()) {
+      let nav = document.querySelector('nav');
+      if (!nav) {
+        nav = document.createElement('nav');
+        document.body.insertBefore(nav, document.body.firstChild);
+      }
+      const adminLink = document.createElement('a');
+      adminLink.href = '/pages/admin.html';
+      adminLink.textContent = 'Admin';
+      nav.appendChild(adminLink);
+    }
+  }
+
+  renderAdminLink();
   fetchAndDisplayComponents();
 });
