@@ -43,52 +43,44 @@ export async function onRequestPost(context) {
   }
   const base64Data = arrayBufferToBase64(arrayBuffer);
 
+  // Rate limiting: allow max 5 uploads per user per hour
   if (context.env && typeof context.env.DB?.prepare === 'function') {
-    // Check for identical file data
-    const existing = await context.env.DB.prepare('SELECT id FROM components WHERE data = ?').bind(base64Data).first();
-    if (existing) {
-      return new Response(JSON.stringify({ error: 'A file with identical data already exists.' }), { status: 409 });
-    }
-    // Check for same timestamp
-    const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    const sameTimestamp = await context.env.DB.prepare('SELECT id FROM components WHERE created_at = ?').bind(now).first();
-    if (sameTimestamp) {
-      return new Response(JSON.stringify({ error: 'A file with the same timestamp already exists.' }), { status: 409 });
-    }
-    // Check for same title & tags
-    const tagsString = tags.join(',');
-    const sameTitleTags = await context.env.DB.prepare('SELECT id FROM components WHERE name = ? AND tags = ?').bind(file.name, tagsString).first();
-    if (sameTitleTags) {
-      return new Response(JSON.stringify({ error: 'A file with the same title and tags already exists.' }), { status: 409 });
-    }
-  }
-
-  let finalUsername = username;
-  if (!finalUsername) {
-    const cookieHeader = request.headers.get("cookie") || "";
-    const authTokenMatch = cookieHeader.match(/authToken=([^;]+)/);
-    const authToken = authTokenMatch ? authTokenMatch[1] : null;
-    if (
-      authToken &&
-      context.env &&
-      typeof context.env.DB?.prepare === "function"
-    ) {
-      try {
-        const user = await context.env.DB.prepare(
-          "SELECT username FROM users WHERE auth_token = ?",
-        )
-          .bind(authToken)
-          .first();
-        if (user && user.username) {
-          finalUsername = user.username;
+    let finalUsername = username;
+    if (!finalUsername) {
+      const cookieHeader = request.headers.get("cookie") || "";
+      const authTokenMatch = cookieHeader.match(/authToken=([^;]+)/);
+      const authToken = authTokenMatch ? authTokenMatch[1] : null;
+      if (
+        authToken &&
+        context.env &&
+        typeof context.env.DB?.prepare === "function"
+      ) {
+        try {
+          const user = await context.env.DB.prepare(
+            "SELECT username FROM users WHERE auth_token = ?",
+          )
+            .bind(authToken)
+            .first();
+          if (user && user.username) {
+            finalUsername = user.username;
+          }
+        } catch (err) {
+          return new Response(
+            JSON.stringify({
+              error: "Failed to look up username from auth token.",
+            }),
+            { status: 500 },
+          );
         }
-      } catch (err) {
-        return new Response(
-          JSON.stringify({
-            error: "Failed to look up username from auth token.",
-          }),
-          { status: 500 },
-        );
+      }
+    }
+    if (finalUsername) {
+      const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+      const uploadCount = await context.env.DB.prepare(
+        'SELECT COUNT(*) as count FROM components WHERE username = ? AND created_at > ?'
+      ).bind(finalUsername, oneHourAgo).first();
+      if (uploadCount && uploadCount.count >= 5) {
+        return new Response(JSON.stringify({ error: 'Rate limit exceeded: max 5 uploads per hour.' }), { status: 429 });
       }
     }
   }
