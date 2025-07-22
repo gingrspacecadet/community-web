@@ -20,8 +20,13 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       const data = await res.json();
       if (data.success) {
-        resultPre.textContent =
-          "Success!\n" + JSON.stringify(data.result, null, 2);
+        let output = 'Success!\n';
+        if (data.result && data.result.results) {
+          output += JSON.stringify(data.result.results, null, 2);
+        } else {
+          output += JSON.stringify(data.result, null, 2);
+        }
+        resultPre.textContent = output;
       } else {
         resultPre.textContent = "Error: " + (data.error || "Unknown error");
       }
