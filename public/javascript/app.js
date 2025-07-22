@@ -74,19 +74,13 @@ document.addEventListener("DOMContentLoaded", () => {
               for (let i = 0; i < binary.length; i++) {
                 bytes[i] = binary.charCodeAt(i);
               }
-              await navigator.clipboard.write([
-                new ClipboardItem({
-                  "application/octet-stream": new Blob([bytes], { type: "application/octet-stream" }),
-                }),
-              ]);
-              alert("File data copied to clipboard!");
+              // Convert bytes to string (plain text body)
+              const decoder = new TextDecoder();
+              const text = decoder.decode(bytes);
+              await navigator.clipboard.writeText(text);
+              alert("File body copied to clipboard as plain text!");
             } catch (err) {
-              try {
-                await navigator.clipboard.writeText(base64);
-                alert("Base64 data copied to clipboard!");
-              } catch (err2) {
-                alert("Failed to copy: " + err2);
-              }
+              alert("Failed to copy: " + err);
             }
           });
           li.appendChild(copyBtn);
