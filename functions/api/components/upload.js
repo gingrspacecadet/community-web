@@ -44,9 +44,22 @@ export async function onRequestPost(context) {
   const base64Data = arrayBufferToBase64(arrayBuffer);
 
   if (context.env && typeof context.env.DB?.prepare === 'function') {
+    // Check for identical file data
     const existing = await context.env.DB.prepare('SELECT id FROM components WHERE data = ?').bind(base64Data).first();
     if (existing) {
       return new Response(JSON.stringify({ error: 'A file with identical data already exists.' }), { status: 409 });
+    }
+    // Check for same timestamp
+    const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    const sameTimestamp = await context.env.DB.prepare('SELECT id FROM components WHERE created_at = ?').bind(now).first();
+    if (sameTimestamp) {
+      return new Response(JSON.stringify({ error: 'A file with the same timestamp already exists.' }), { status: 409 });
+    }
+    // Check for same title & tags
+    const tagsString = tags.join(',');
+    const sameTitleTags = await context.env.DB.prepare('SELECT id FROM components WHERE name = ? AND tags = ?').bind(file.name, tagsString).first();
+    if (sameTitleTags) {
+      return new Response(JSON.stringify({ error: 'A file with the same title and tags already exists.' }), { status: 409 });
     }
   }
 
