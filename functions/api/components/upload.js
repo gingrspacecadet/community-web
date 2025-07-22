@@ -14,6 +14,7 @@ export async function onRequestPost(context) {
     );
   }
   const username = formData.get("username")?.toString().trim() || null;
+  let finalUsername = username;
   const tagsRaw = formData.get("tagsInput")?.toString().trim() || "";
   if (tagsRaw.length > 1024) {
     return new Response(
