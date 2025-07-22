@@ -1,23 +1,21 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
+  <head>
     <title>Error Page</title>
-</head>
-<body>
+  </head>
+
+  <body>
     <h1 id="errorCode">Error</h1>
     <h2 id="errorDescription">An error occurred</h2>
 
     <script>
-        
-        const params = new URLSearchParams(window.location.search);
-        
-        
-        const errorCode = params.get('code') || '500';
-        document.getElementById('errorCode').textContent = `${errorCode} Error`;
-        
-        
-        const errorDesc = params.get('desc') || 'Something went wrong';
-        document.getElementById('errorDescription').textContent = errorDesc;
+      const params = new URLSearchParams(window.location.search);
+
+      const errorCode = params.get("code") || "500";
+      document.getElementById("errorCode").textContent = `${errorCode} Error`;
+
+      const errorDesc = params.get("desc") || "Something went wrong";
+      document.getElementById("errorDescription").textContent = errorDesc;
     </script>
-</body>
+  </body>
 </html>

@@ -1,149 +1,162 @@
 /* Importing the Poppins font for a modern look */
-@import url('https:
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 /* Reset default margin and set a full-page flexbox */
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #1e1e2f, #12121a); /* dark gradient background */
-    color: #f0f0f0; /* light text for contrast */
-    display: flex;
-    flex-direction: column;
-    align-items: center;    /* horizontal centering */
-    justify-content: flex-start; /* top align content, footer stays at bottom */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(
+    135deg,
+    #1e1e2f,
+    #12121a
+  ); /* dark gradient background */
+  color: #f0f0f0; /* light text for contrast */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* horizontal centering */
+  justify-content: flex-start; /* top align content, footer stays at bottom */
 }
 
 /* Header area */
 header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 150px;
-    width: 100%;
-    background: linear-gradient(90deg, #2b2d42, #4e54c8); /* dark header gradient */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 150px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    #2b2d42,
+    #4e54c8
+  ); /* dark header gradient */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  padding: 1rem;
 }
 
 /* Header title text */
 header h1 {
-    margin: 0 0 1rem 0;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    font-size: 2.8rem;
-    color: #ffffff;
-    letter-spacing: 1px;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-    text-align: center;
+  margin: 0 0 1rem 0;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 2.8rem;
+  color: #ffffff;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  text-align: center;
 }
 
 /* Navigation inside header */
 header nav {
-    text-align: center;
+  text-align: center;
 }
 
 /* Navigation links */
 header nav a {
-    color: #ddddff;
-    text-decoration: none;
-    margin: 0 1.2rem;
-    font-weight: 500;
-    font-family: 'Poppins', sans-serif;
-    transition: color 0.3s ease;
+  color: #ddddff;
+  text-decoration: none;
+  margin: 0 1.2rem;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  transition: color 0.3s ease;
 }
 
 /* On hover, links turn golden */
 header nav a:hover {
-    color: #ffd700;
+  color: #ffd700;
 }
 
 /* Main content wrapper (optional) */
 main {
-    flex: 1; /* take up remaining space */
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    box-sizing: border-box;
-    text-align: center;
+  flex: 1; /* take up remaining space */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+  text-align: center;
 }
 
 /* Stylish button */
 .styledButton {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
-    color: white;
-    background: linear-gradient(90deg, #4e54c8, #8f94fb);
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
-    text-align: center;
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: white;
+  background: linear-gradient(90deg, #4e54c8, #8f94fb);
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition:
+    background 0.3s ease,
+    transform 0.2s ease;
+  text-align: center;
 }
 
 /* Hover effect for button */
 .styledButton:hover {
-    background: linear-gradient(90deg, #8f94fb, #4e54c8);
-    transform: translateY(-2px);
+  background: linear-gradient(90deg, #8f94fb, #4e54c8);
+  transform: translateY(-2px);
 }
 
 /* Active/clicked button effect */
 .styledButton:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 /* Footer that sticks to the bottom */
 footer {
-    text-align: center;
-    padding: 1rem;
-    background-color: #1a1a2e;
-    color: #cccccc;
-    width: 100%;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  padding: 1rem;
+  background-color: #1a1a2e;
+  color: #cccccc;
+  width: 100%;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
 }
 
 /* Discord button styles */
 .discordButton {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem; /* space between icon and text */
-    padding: 0.75rem 1.6rem;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
-    color: white;
-    background-color: #4a4a4a; /* solid gray */
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    transition: background 0.3s ease, transform 0.2s ease;
-    text-align: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem; /* space between icon and text */
+  padding: 0.75rem 1.6rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: white;
+  background-color: #4a4a4a; /* solid gray */
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition:
+    background 0.3s ease,
+    transform 0.2s ease;
+  text-align: center;
 }
 
 /* Hover: lighter gray */
 .discordButton:hover {
-    background-color: #5a5a5a;
-    transform: translateY(-2px);
+  background-color: #5a5a5a;
+  transform: translateY(-2px);
 }
 
 /* Clicked: pressed in */
 .discordButton:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 /* Discord icon inside */
 .discordButton img {
-    height: 1.3rem;
+  height: 1.3rem;
 }

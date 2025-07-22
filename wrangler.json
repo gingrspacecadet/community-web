@@ -1,16 +1,16 @@
 {
-    "name": "community-web",
-    "compatibility_date": "2024-04-17",
-    "pages_build_output_dir": "./public",
-    "vars": {
-        "DISCORD_CLIENT_ID": "1391809353933127810",
-        "DISCORD_REDIRECT_URI": "/api/auth/callback"
-    },
-    "d1_databases": [
-        {
-            "binding": "DB",
-            "database_name": "community-web",
-            "database_id": "74647ff3-36a4-4a76-adcd-5974c6a4efdd"
-        }
-    ]
+  "name": "community-web",
+  "compatibility_date": "2024-04-17",
+  "pages_build_output_dir": "./public",
+  "vars": {
+    "DISCORD_CLIENT_ID": "1391809353933127810",
+    "DISCORD_REDIRECT_URI": "/api/auth/callback"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "community-web",
+      "database_id": "74647ff3-36a4-4a76-adcd-5974c6a4efdd"
+    }
+  ]
 }

@@ -5,5 +5,10 @@
 /.wrangler
 
 package*
+
 # Environment variables file
 .env
+
+# PNPM files
+pnpm-lock.yaml
+pnpm-workspace.yaml
