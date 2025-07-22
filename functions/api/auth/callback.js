@@ -84,9 +84,16 @@ export async function onRequestGet(context) {
   const config = await getOAuthConfig(request);
   return new Response(null, {
     status: 302,
-    headers: {
-      "Set-Cookie": `authToken=${tokenData.access_token}; Path=/; HttpOnly; ${config.cookies}SameSite=Lax; Max-Age=86400, username=${userData.username}; Path=/; SameSite=Lax; Max-Age=86400`,
-      Location: "/pages/app",
-    },
+    headers: [
+      [
+        "Set-Cookie",
+        `authToken=${tokenData.access_token}; Path=/; HttpOnly; ${config.cookies}SameSite=Lax; Max-Age=86400`
+      ],
+      [
+        "Set-Cookie",
+        `username=${encodeURIComponent(userData.username)}; Path=/; SameSite=Lax; Max-Age=86400`
+      ],
+      ["Location", "/pages/app"]
+    ]
   });
 }
