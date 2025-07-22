@@ -44,6 +44,7 @@ export async function onRequestPost(context) {
   const base64Data = arrayBufferToBase64(arrayBuffer);
 
   // Rate limiting: allow max 5 uploads per user per hour
+  let finalUsername = username;
   if (context.env && typeof context.env.DB?.prepare === 'function') {
     let finalUserId = userId;
     if (!finalUserId) {
@@ -57,12 +58,15 @@ export async function onRequestPost(context) {
       ) {
         try {
           const user = await context.env.DB.prepare(
-            "SELECT id FROM users WHERE auth_token = ?",
+            "SELECT id, username FROM users WHERE auth_token = ?",
           )
             .bind(authToken)
             .first();
           if (user && user.id) {
             finalUserId = user.id;
+            if (!finalUsername && user.username) {
+              finalUsername = user.username;
+            }
           }
         } catch (err) {
           return new Response(
