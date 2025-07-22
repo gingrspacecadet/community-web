@@ -52,7 +52,7 @@ export async function onRequestPost(context) {
   }
   if (context.env && typeof context.env.DB?.prepare === 'function') {
     if (userForRateLimit) {
-      const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+      const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString().replace('T', ' ').slice(0, 19);
       const uploadCount = await context.env.DB.prepare(
         'SELECT COUNT(*) as count FROM components WHERE description LIKE ? AND created_at > ?'
       ).bind(`%[user:${userForRateLimit}]%`, oneHourAgo).first();
