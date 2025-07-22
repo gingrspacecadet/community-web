@@ -25,11 +25,26 @@ document.addEventListener("DOMContentLoaded", () => {
           let userDisplay = comp.username
             ? `<span style="color:#888">by ${comp.username}</span><br/>`
             : "";
+          // Escape HTML for name, description, and tags
+          function escapeHtml(str) {
+            return str.replace(/[&<>"']/g, function(tag) {
+              const chars = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+              };
+              return chars[tag] || tag;
+            });
+          }
+          const safeName = escapeHtml(comp.name);
+          const safeDescription = escapeHtml(comp.description || "");
           let tagsDisplay =
             comp.tags && comp.tags.length
-              ? `<div class="tags-list">${comp.tags.map((tag) => `<span class="tag">${tag}</span>`).join(" ")}</div>`
+              ? `<div class="tags-list">${comp.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join(" ")}</div>`
               : "";
-          li.innerHTML = `<strong>${comp.name}</strong> <small>(${comp.created_at})</small><br/>${userDisplay}<em>${comp.description || ""}</em>${tagsDisplay}`;
+          li.innerHTML = `<strong>${safeName}</strong> <small>(${comp.created_at})</small><br/>${userDisplay}<em>${safeDescription}</em>${tagsDisplay}`;
 
           const downloadBtn = document.createElement("button");
           downloadBtn.textContent = "Download";
