@@ -44,45 +44,17 @@ export async function onRequestPost(context) {
   const base64Data = arrayBufferToBase64(arrayBuffer);
 
   // Rate limiting: allow max 5 uploads per user per hour
-  let finalUsername = username;
+  let userForRateLimit = null;
+  const userMatch = description.match(/\[user:([^\]]+)\]/);
+  if (userMatch) {
+    userForRateLimit = userMatch[1];
+  }
   if (context.env && typeof context.env.DB?.prepare === 'function') {
-    let finalUserId = userId;
-    if (!finalUserId) {
-      const cookieHeader = request.headers.get("cookie") || "";
-      const authTokenMatch = cookieHeader.match(/authToken=([^;]+)/);
-      const authToken = authTokenMatch ? authTokenMatch[1] : null;
-      if (
-        authToken &&
-        context.env &&
-        typeof context.env.DB?.prepare === "function"
-      ) {
-        try {
-          const user = await context.env.DB.prepare(
-            "SELECT id, username FROM users WHERE auth_token = ?",
-          )
-            .bind(authToken)
-            .first();
-          if (user && user.id) {
-            finalUserId = user.id;
-            if (!finalUsername && user.username) {
-              finalUsername = user.username;
-            }
-          }
-        } catch (err) {
-          return new Response(
-            JSON.stringify({
-              error: "Failed to look up user id from auth token.",
-            }),
-            { status: 500 },
-          );
-        }
-      }
-    }
-    if (finalUserId) {
+    if (userForRateLimit) {
       const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
       const uploadCount = await context.env.DB.prepare(
-        'SELECT COUNT(*) as count FROM components WHERE user_id = ? AND created_at > ?'
-      ).bind(finalUserId, oneHourAgo).first();
+        'SELECT COUNT(*) as count FROM components WHERE description LIKE ? AND created_at > ?'
+      ).bind(`%[user:${userForRateLimit}]%`, oneHourAgo).first();
       if (uploadCount && uploadCount.count >= 5) {
         return new Response(JSON.stringify({ error: 'Rate limit exceeded: max 5 uploads per hour.' }), { status: 429 });
       }
