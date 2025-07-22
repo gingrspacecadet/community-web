@@ -55,7 +55,8 @@ export async function onRequestPost(context) {
       // Use the correct timestamp format for SQLite DATETIME (YYYY-MM-DD HH:MM:SS)
       const now = new Date();
       const pad = (n) => n.toString().padStart(2, '0');
-      const oneHourAgo = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours()-1)}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+      const d = new Date(Date.now() - 60 * 60 * 1000);
+      const oneHourAgo = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
       const uploadCount = await context.env.DB.prepare(
         'SELECT COUNT(*) as count FROM components WHERE description LIKE ? AND created_at > ?'
       ).bind(`%[user:${userForRateLimit}]%`, oneHourAgo).first();
