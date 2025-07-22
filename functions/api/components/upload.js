@@ -1,6 +1,3 @@
-
-
-
 import { insertComponent } from '../utils.js';
 
 export async function onRequestPost(context) {
@@ -36,7 +33,13 @@ export async function onRequestPost(context) {
   }
   const base64Data = arrayBufferToBase64(arrayBuffer);
 
-  
+  if (context.env && typeof context.env.DB?.prepare === 'function') {
+    const existing = await context.env.DB.prepare('SELECT id FROM components WHERE data = ?').bind(base64Data).first();
+    if (existing) {
+      return new Response(JSON.stringify({ error: 'A file with identical data already exists.' }), { status: 409 });
+    }
+  }
+
   let finalUsername = username;
   if (!finalUsername) {
     const cookieHeader = request.headers.get('cookie') || '';
