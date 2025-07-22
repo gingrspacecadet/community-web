@@ -68,7 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
               alert("No file data available.");
               return;
             }
-
             try {
               const binary = atob(base64);
               const bytes = new Uint8Array(binary.length);
@@ -77,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
               }
               await navigator.clipboard.write([
                 new ClipboardItem({
-                  "application/octet-stream": new Blob([bytes]),
+                  "application/octet-stream": new Blob([bytes], { type: "application/octet-stream" }),
                 }),
               ]);
               alert("File data copied to clipboard!");
