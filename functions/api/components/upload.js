@@ -45,8 +45,8 @@ export async function onRequestPost(context) {
 
   // Rate limiting: allow max 5 uploads per user per hour
   if (context.env && typeof context.env.DB?.prepare === 'function') {
-    let finalUsername = username;
-    if (!finalUsername) {
+    let finalUserId = userId;
+    if (!finalUserId) {
       const cookieHeader = request.headers.get("cookie") || "";
       const authTokenMatch = cookieHeader.match(/authToken=([^;]+)/);
       const authToken = authTokenMatch ? authTokenMatch[1] : null;
@@ -57,28 +57,28 @@ export async function onRequestPost(context) {
       ) {
         try {
           const user = await context.env.DB.prepare(
-            "SELECT username FROM users WHERE auth_token = ?",
+            "SELECT id FROM users WHERE auth_token = ?",
           )
             .bind(authToken)
             .first();
-          if (user && user.username) {
-            finalUsername = user.username;
+          if (user && user.id) {
+            finalUserId = user.id;
           }
         } catch (err) {
           return new Response(
             JSON.stringify({
-              error: "Failed to look up username from auth token.",
+              error: "Failed to look up user id from auth token.",
             }),
             { status: 500 },
           );
         }
       }
     }
-    if (finalUsername) {
+    if (finalUserId) {
       const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
       const uploadCount = await context.env.DB.prepare(
-        'SELECT COUNT(*) as count FROM components WHERE username = ? AND created_at > ?'
-      ).bind(finalUsername, oneHourAgo).first();
+        'SELECT COUNT(*) as count FROM components WHERE user_id = ? AND created_at > ?'
+      ).bind(finalUserId, oneHourAgo).first();
       if (uploadCount && uploadCount.count >= 5) {
         return new Response(JSON.stringify({ error: 'Rate limit exceeded: max 5 uploads per hour.' }), { status: 429 });
       }
