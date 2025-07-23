@@ -46,9 +46,12 @@ document.addEventListener("DOMContentLoaded", () => {
               : "";
           li.innerHTML = `<strong>${safeName}</strong> <small>(${comp.created_at})</small><br/>${userDisplay}<em>${safeDescription}</em>${tagsDisplay}`;
 
+          // Button group container for vertical alignment and centering
+          const btnGroup = document.createElement("div");
+          btnGroup.className = "button-group vertical";
+
           const downloadBtn = document.createElement("button");
           downloadBtn.textContent = "Download";
-          downloadBtn.style.marginLeft = "1em";
           downloadBtn.addEventListener("click", () => {
             const base64 = comp.data || "";
             if (!base64) {
@@ -72,11 +75,10 @@ document.addEventListener("DOMContentLoaded", () => {
               URL.revokeObjectURL(url);
             }, 100);
           });
-          li.appendChild(downloadBtn);
+          btnGroup.appendChild(downloadBtn);
 
           const copyBtn = document.createElement("button");
           copyBtn.textContent = "Copy";
-          copyBtn.style.marginLeft = "0.5em";
           copyBtn.addEventListener("click", async () => {
             const base64 = comp.data || "";
             if (!base64) {
@@ -98,7 +100,8 @@ document.addEventListener("DOMContentLoaded", () => {
               alert("Failed to copy: " + err);
             }
           });
-          li.appendChild(copyBtn);
+          btnGroup.appendChild(copyBtn);
+          li.appendChild(btnGroup);
           list.appendChild(li);
         });
         container.appendChild(list);

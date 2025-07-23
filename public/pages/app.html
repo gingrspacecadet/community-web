@@ -9,37 +9,34 @@
 </head>
 
 <body>
-  <header>
-    <h1>Welcome to the Bigstone Community App</h1>
-    <nav>
-      <a href="" class="admin-link"></a>
-      <a href=""></a>
-      <a href=""></a>
-      <a href=""></a>
-      <a href=""></a>
-    </nav>
-  </header>
-  <div class="app-container">
-    <p>This is your app dashboard. More features coming soon!</p>
-
-    <div class="upload-component">
-      <h2>Upload Your Content</h2>
-      <form id="uploadForm">
-        <label for="fileInput">Select file:</label>
-        <input type="file" id="fileInput" name="fileInput" accept=".nbt, .bp, .schem" required />
-        <label for="descriptionInput">Description:</label>
-        <textarea id="descriptionInput" name="descriptionInput" required
-          placeholder="Enter a description..."></textarea>
-        <label for="tagsInput">Tags:</label>
-        <input type="text" id="tagsInput" name="tagsInput"
-          placeholder="Comma-separated tags (e.g. redstone,door,logic)" />
-        <button type="submit">Upload</button>
-      </form>
-    </div>
+  <div class="app-layout">
+    <header class="app-header">
+      <h1>Welcome to the Bigstone Community App</h1>
+      <nav style="display: flex; justify-content: center; gap: 18px;">
+        <a href="#" class="admin-link"></a>
+      </nav>
+    </header>
+    <main class="app-container">
+      <p>This is your app dashboard. More features coming soon!</p>
+      <div class="upload-component">
+        <h2>Upload Your Content</h2>
+        <form id="uploadForm">
+          <label for="fileInput">Select file:</label>
+          <input type="file" id="fileInput" name="fileInput" accept=".nbt, .bp, .schem" required />
+          <label for="descriptionInput">Description:</label>
+          <textarea id="descriptionInput" name="descriptionInput" required
+            placeholder="Enter a description..."></textarea>
+          <label for="tagsInput">Tags:</label>
+          <input type="text" id="tagsInput" name="tagsInput"
+            placeholder="Comma-separated tags (e.g. redstone,door,logic)" />
+          <button type="submit">Upload</button>
+        </form>
+      </div>
+    </main>
+    <footer>
+      <p>&copy; 2025 BigstoneDevelopment. All rights reserved.</p>
+    </footer>
   </div>
-  <footer>
-    <p>&copy; 2025 BigstoneDevelopment. All rights reserved.</p>
-  </footer>
   <script src="../javascript/app.js"></script>
 </body>
 
