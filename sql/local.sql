@@ -1,6 +1,5 @@
 PRAGMA defer_foreign_keys=TRUE;
 
-
 CREATE TABLE users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   username TEXT UNIQUE NOT NULL,
