@@ -5,44 +5,51 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bigstone Community | App</title>
-  <!-- Uncomment after styling done --> <!-- <script src="../javascript/ui/franken.js" type="module"></script> -->
-  <link rel="stylesheet" href="../styles/styles.css" />
+  <!-- Uncomment after styling done -->
+  <script src="../javascript/ui/franken.js" type="module"></script>
+  <link rel="stylesheet" href="../styles/zinc.css" />
+  <!-- icon -->
+  <link rel="icon" href="/assets/favicon.png" />
 </head>
 
 <body>
-  <div class="app-layout">
-    <header class="app-header">
-      <h1>Welcome to the Bigstone Community App</h1>
-      <nav style="display: flex; justify-content: center; gap: 18px;">
-        <a href="#" class="admin-link"></a>
-      </nav>
-    </header>
-    <main class="app-container">
-      <p>This is your app dashboard. More features coming soon!</p>
-      <div class="upload-component">
-        <h2>Upload Your Content</h2>
-        <form id="uploadForm">
-          <label for="fileInput">Select file:</label>
-          <input type="file" class="uk-input" id="fileInput" name="fileInput" accept=".nbt, .bp, .schem" required />
-          <label for="descriptionInput">Description:</label>
-          <textarea id="descriptionInput" name="descriptionInput" required
-            placeholder="Enter a description..."></textarea>
-          <label for="tagsInput">Tags:</label>
-          <input type="text" id="tagsInput" class="uk-input" name="tagsInput"
-            placeholder="Comma-separated tags (e.g. redstone,door,logic)" />
-          <form>
-            <uk-input-tag
-              placeholder="Add a tag"
-            ></uk-input-tag>
-          </form>
-          <button type="submit">Upload</button>
-        </form>
-      </div>
+  <div class="uk-card uk-card-body app-layout">
+    <h1 class="uk-card-title">Welcome to the Bigstone Community App</h1>
+    <main
+        <p class="uk-text-meta uk-text-center">This is your app dashboard. More features coming soon!</p>
+        <!-- Tabs -->
+        <ul data-uk-tab>
+            <li class="uk-active"><a class="px-4 pb-3 pt-2" href="#">Upload Components</a></li>
+            <li><a class="px-4 pb-3 pt-2" href="#">Admin SQL</a></li>
+        </ul>
+
+        <!-- Tab Content -->
+        <ul class="uk-switcher uk-margin">
+         <li>
+            <div class="upload-component">
+                <h2>Upload Your Content</h2>
+                <form id="uploadForm">
+                    <label for="fileInput">Select file:</label>
+                    <input type="file" class="uk-input" id="fileInput" name="fileInput" accept=".nbt, .bp, .schem" required />
+                    <label for="descriptionInput">Description:</label>
+                    <textarea id="descriptionInput" name="descriptionInput" required
+                      placeholder="Enter a description..."></textarea>
+                    <uk-input-tag id="tagsInput
+                      placeholder="Add a tag" name="tagsInput" class="uk-input uk-form-width-medium"
+                    ></uk-input-tag>
+                    <button type="submit">Upload</button>
+                </form>
+            </div>
+          </li>
+          <li>
+            <iframe src="admin.html" style="width:100%; height:500px; border:0;"></iframe>
+          </li>
+        </ul>
     </main>
     <footer>
-      <p>&copy; 2025 BigstoneDevelopment. All rights reserved.</p>
+        <p>&copy; 2025 BigstoneDevelopment. All rights reserved.</p>
     </footer>
-  </div>
+</div>
   <script src="../javascript/app.js"></script>
 </body>
 

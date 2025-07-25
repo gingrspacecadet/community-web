@@ -9,6 +9,9 @@ package*
 # Environment variables file
 .env
 
+# Dev icon
+public/assets/favicon.png
+
 # PNPM files
 pnpm-lock.yaml
 pnpm-workspace.yaml
