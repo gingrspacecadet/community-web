@@ -1,15 +1,30 @@
 .bg-image {
-        background-image: url('../assets/images/poster.jpg');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
+  background-image: url('../assets/images/poster.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 
-        min-height: 300px;
-        color: white;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 2rem;
-        border-radius: 8px;
-      }
+  min-height: 300px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+.bg-image::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4); /* Fades the image */
+  z-index: 0;
+}
+
+.bg-image > * {
+  position: relative;
+  z-index: 1;
+}
