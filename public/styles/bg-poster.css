@@ -1,0 +1,15 @@
+.bg-image {
+        background-image: url('../assets/images/poster.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        min-height: 300px;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        border-radius: 8px;
+      }

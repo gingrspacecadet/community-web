@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tailwind CSS Cheatsheet with Explanations</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    summary {
+      cursor: pointer;
+    }
+    code {
+      background-color: #f3f4f6;
+      padding: 0.2rem 0.4rem;
+      border-radius: 0.25rem;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-900 p-8 font-sans">
+  <h1 class="text-3xl font-bold mb-6 text-center">Tailwind CSS Cheatsheet</h1>
+
+  <div class="space-y-4 max-w-3xl mx-auto">
+
+    <!-- Layout -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Layout</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Controls the overall box model and container size of elements. Useful for centering content and defining how the element’s size is calculated.</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>container</code> - centers and sets max width for responsive content</li>
+          <li><code>box-border</code> - includes padding and border in element’s size</li>
+          <li><code>box-content</code> - excludes padding and border from size</li>
+        </ul>
+        <code>&lt;div class="container mx-auto"&gt;&lt;/div&gt;</code>
+      </div>
+    </details>
+
+    <!-- Display -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Display</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Defines how elements behave in layout flow, such as block, inline, flexbox, or grid. Important for controlling layout types and hiding/showing elements.</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>block</code> - element takes full width and starts on a new line</li>
+          <li><code>inline</code> - element flows inline with text</li>
+          <li><code>flex</code> - enables flexbox layout for flexible positioning</li>
+          <li><code>grid</code> - enables grid layout</li>
+          <li><code>hidden</code> - hides element completely</li>
+        </ul>
+        <code>&lt;div class="flex"&gt;&lt;/div&gt;</code>
+      </div>
+    </details>
+
+    <!-- Visibility -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Visibility</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Controls whether elements are visible but take space, or invisible but still occupy space in the layout.</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>visible</code> - element is shown normally</li>
+          <li><code>invisible</code> - element is hidden visually but still takes up space</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Overflow -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Overflow</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Controls how content that exceeds an element’s size behaves — whether it scrolls, hides, or overflows visibly.</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>overflow-auto</code> - adds scrollbars if content overflows</li>
+          <li><code>overflow-hidden</code> - hides overflow content</li>
+          <li><code>overflow-scroll</code> - always shows scrollbars</li>
+          <li><code>overflow-visible</code> - content can overflow visibly</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Position -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Position</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Controls how elements are positioned relative to normal flow or other elements, enabling fixed, absolute, or sticky placement.</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>static</code> - default normal flow positioning</li>
+          <li><code>relative</code> - positioned relative to itself, allows offset</li>
+          <li><code>absolute</code> - positioned relative to nearest positioned ancestor</li>
+          <li><code>fixed</code> - fixed to viewport</li>
+          <li><code>sticky</code> - toggles between relative and fixed based on scroll</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Top / Right / Bottom / Left -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Top / Right / Bottom / Left</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Moves positioned elements away from edges of their containing block.</p>
+        <p>Use with <code>relative</code>, <code>absolute</code>, <code>fixed</code>, or <code>sticky</code> elements.</p>
+        <code>top-0 right-4 bottom-10 left-2</code>
+      </div>
+    </details>
+
+    <!-- Flexbox and Grid -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Flexbox and Grid</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Enables flexible and grid-based layouts for complex positioning and alignment.</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>flex</code> - start a flex container</li>
+          <li><code>inline-flex</code> - flex container that behaves like inline element</li>
+          <li><code>grid</code> - start a grid container</li>
+          <li><code>inline-grid</code> - grid container behaving inline</li>
+        </ul>
+        <p>Combine with alignment and spacing utilities for precise control.</p>
+      </div>
+    </details>
+
+    <!-- Flex Basis -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Flex Basis</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Sets the initial size of a flex item before growing or shrinking.</p>
+        <p>Example: <code>basis-1/2</code> sets flex item to 50% of container.</p>
+      </div>
+    </details>
+
+    <!-- Flex Direction -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Flex Direction</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Controls the direction flex items flow.</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>flex-row</code> (default, horizontal)</li>
+          <li><code>flex-col</code> (vertical)</li>
+          <li><code>flex-row-reverse</code>, <code>flex-col-reverse</code></li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Flex Wrap -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Flex Wrap</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Controls whether flex items wrap to the next line or stay on one line.</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>flex-wrap</code> - allows wrapping</li>
+          <li><code>flex-nowrap</code> - no wrapping, items stay on one line</li>
+          <li><code>flex-wrap-reverse</code> - wrap in reverse order</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Flex -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Flex</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Shorthand to set flex-grow, flex-shrink, and flex-basis for flex items.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>flex-1</code> - grow to fill space</li>
+          <li><code>flex-auto</code> - grow and shrink as needed</li>
+          <li><code>flex-initial</code> - default size</li>
+          <li><code>flex-none</code> - don’t grow or shrink</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Flex Grow -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Flex Grow</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Controls how much a flex item grows relative to others.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>grow</code> (equivalent to grow-1)</li>
+          <li><code>grow-0</code> (don’t grow)</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Flex Shrink -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Flex Shrink</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Controls how much a flex item shrinks relative to others.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>shrink</code> (shrink-1)</li>
+          <li><code>shrink-0</code> (don’t shrink)</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Order -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Order</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Changes the order of flex/grid items visually.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>order-1</code>, <code>order-2</code>, ...</li>
+          <li><code>order-first</code>, <code>order-last</code></li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Grid Template Columns -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Grid Template Columns</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Defines how many columns and their sizes in grid layouts.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>grid-cols-3</code> (3 equal columns)</li>
+          <li><code>grid-cols-none</code></li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Grid Column Start / End -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Grid Column Start / End</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Controls which column grid items start and end at.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>col-start-1</code>, <code>col-end-3</code></li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Grid Template Rows -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Grid Template Rows</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Defines rows and their sizes in grid layouts.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>grid-rows-2</code></li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Grid Row Start / End -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Grid Row Start / End</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Controls which row grid items start and end at.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>row-start-1</code>, <code>row-end-3</code></li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Grid Auto Flow -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Grid Auto Flow</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Controls how auto-placed items flow in the grid.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>grid-flow-row</code> (default)</li>
+          <li><code>grid-flow-col</code></li>
+          <li><code>grid-flow-dense</code> (fills gaps)</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Grid Auto Columns -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Grid Auto Columns</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Controls size of implicitly created columns.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>auto-cols-auto</code></li>
+          <li><code>auto-cols-min</code></li>
+          <li><code>auto-cols-max</code></li>
+          <li><code>auto-cols-fr</code></li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Grid Auto Rows -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Grid Auto Rows</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Controls size of implicitly created rows.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>auto-rows-auto</code></li>
+          <li><code>auto-rows-min</code></li>
+          <li><code>auto-rows-max</code></li>
+          <li><code>auto-rows-fr</code></li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Gap -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Gap</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Adds spacing between grid or flex items.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>gap-4</code>, <code>gap-x-2</code>, <code>gap-y-6</code></li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Justify Content -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Justify Content</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Aligns flex or grid items horizontally within the container.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>justify-start</code></li>
+          <li><code>justify-center</code></li>
+          <li><code>justify-between</code></li>
+          <li><code>justify-around</code></li>
+          <li><code>justify-evenly</code></li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Justify Items -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Justify Items</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Aligns grid items horizontally within their grid area.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>justify-items-start</code></li>
+          <li><code>justify-items-center</code></li>
+          <li><code>justify-items-end</code></li>
+          <li><code>justify-items-stretch</code></li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Justify Self -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Justify Self</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Aligns individual grid or flex items horizontally inside their container.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>justify-self-auto</code></li>
+          <li><code>justify-self-start</code></li>
+          <li><code>justify-self-center</code></li>
+          <li><code>justify-self-end</code></li>
+          <li><code>justify-self-stretch</code></li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Align Content -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Align Content</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Aligns flex or grid lines vertically when there is extra space.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>content-start</code></li>
+          <li><code>content-center</code></li>
+          <li><code>content-end</code></li>
+          <li><code>content-between</code></li>
+          <li><code>content-around</code></li>
+          <li><code>content-evenly</code></li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Align Items -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Align Items</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Aligns flex or grid items vertically within the container.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>items-start</code></li>
+          <li><code>items-center</code></li>
+          <li><code>items-end</code></li>
+          <li><code>items-stretch</code></li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Align Self -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Align Self</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Allows individual flex/grid items to override container’s vertical alignment.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>self-auto</code></li>
+          <li><code>self-start</code></li>
+          <li><code>self-center</code></li>
+          <li><code>self-end</code></li>
+          <li><code>self-stretch</code></li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Place Content -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Place Content</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Shorthand for aligning content both vertically and horizontally inside grid or flex containers.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>place-content-center</code></li>
+          <li><code>place-content-start</code></li>
+          <li><code>place-content-between</code></li>
+          <li><code>place-content-stretch</code></li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Place Items -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Place Items</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Shorthand for aligning items both vertically and horizontally inside grid or flex containers.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>place-items-center</code></li>
+          <li><code>place-items-start</code></li>
+          <li><code>place-items-stretch</code></li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Place Self -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Place Self</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Shorthand for aligning a single item both vertically and horizontally within its grid/flex container.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>place-self-auto</code></li>
+          <li><code>place-self-center</code></li>
+          <li><code>place-self-start</code></li>
+          <li><code>place-self-end</code></li>
+          <li><code>place-self-stretch</code></li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Spacing -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Spacing (Padding, Margin, Space Between)</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Controls spacing inside elements (padding), outside elements (margin), and space between siblings.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>p-4</code> - padding all sides</li>
+          <li><code>m-2</code> - margin all sides</li>
+          <li><code>space-x-4</code> - horizontal space between siblings</li>
+          <li><code>space-y-2</code> - vertical space between siblings</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Sizing -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Sizing (Width, Height, Min/Max)</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Controls element size constraints.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>w-1/2</code> - width 50%</li>
+          <li><code>h-64</code> - fixed height</li>
+          <li><code>min-w-full</code> - minimum width 100%</li>
+          <li><code>max-h-screen</code> - maximum height equal to viewport</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Typography -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Typography</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Controls text size, weight, style, spacing, alignment, and transformation.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>text-2xl</code>, <code>font-bold</code>, <code>italic</code></li>
+          <li><code>tracking-wide</code> (letter spacing)</li>
+          <li><code>leading-relaxed</code> (line height)</li>
+          <li><code>text-center</code>, <code>uppercase</code></li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Borders -->
+    <details class="bg-white p-4 rounded shadow">
+      <summary class="font-semibold text-lg">Borders</summary>
+      <div class="mt-2 text-sm">
+        <p><strong>What it does:</strong> Adds borders, border width, style, and rounded corners.</p>
+        <p>Examples:</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><code>border</code>, <code>border-2</code>, <code>border-t</code></li>
+          <li><code>rounded</code>, <code>rounded-lg</code>, <code>rounded-full</code></li>
+          <li><code>border-dashed</code>, <code>border-solid</code>, <code>border-dotted</code></li>
+        </ul>
+      </div>
+    </details>
+
+  </div>
+</body>
+</html>

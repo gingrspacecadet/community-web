@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bigstone Community | App</title>
+  <!-- Uncomment after styling done --> <!-- <script src="../javascript/ui/franken.js" type="module"></script> -->
   <link rel="stylesheet" href="../styles/styles.css" />
 </head>
 
@@ -22,13 +23,18 @@
         <h2>Upload Your Content</h2>
         <form id="uploadForm">
           <label for="fileInput">Select file:</label>
-          <input type="file" id="fileInput" name="fileInput" accept=".nbt, .bp, .schem" required />
+          <input type="file" class="uk-input" id="fileInput" name="fileInput" accept=".nbt, .bp, .schem" required />
           <label for="descriptionInput">Description:</label>
           <textarea id="descriptionInput" name="descriptionInput" required
             placeholder="Enter a description..."></textarea>
           <label for="tagsInput">Tags:</label>
-          <input type="text" id="tagsInput" name="tagsInput"
+          <input type="text" id="tagsInput" class="uk-input" name="tagsInput"
             placeholder="Comma-separated tags (e.g. redstone,door,logic)" />
+          <form>
+            <uk-input-tag
+              placeholder="Add a tag"
+            ></uk-input-tag>
+          </form>
           <button type="submit">Upload</button>
         </form>
       </div>

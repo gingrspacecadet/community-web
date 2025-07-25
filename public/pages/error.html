@@ -2,11 +2,20 @@
 <html>
   <head>
     <title>Error Page</title>
+
+    <!-- Franken UI -->
+    <script src="../javascript/ui/franken.js" type="module"></script>
   </head>
 
   <body>
-    <h1 id="errorCode">Error</h1>
-    <h2 id="errorDescription">An error occurred</h2>
+    <div class="flex justify-center items-center flex-col my-12">
+      <div class="uk-card uk-card-body max-w-sm w-80">
+        <h3 class="uk-card-title" id="errorCode">Error</h3>
+        <p class="mt-4" id="errorDescription">
+          An error occurred
+        </p>
+      </div>
+    </div>
 
     <script>
       const params = new URLSearchParams(window.location.search);

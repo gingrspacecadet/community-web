@@ -2,15 +2,23 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Bigstone Community</title>
+    
+    <!-- Franken UI -->
+    <script src="../javascript/ui/franken.js" type="module"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../styles/bg-poster.css" />
   </head>
 
-  <body>
-    <header>
-      <h1>Bigstone Community</h1>
-      <button id="loginBtn">Login with Discord</button>
-    </header>
+  <body class="flex justify-center items-center min-h-screen bg-image">
+    <div class="uk-card uk-card-body max-w-sm mx-auto text-center">
+      <h1 class="uk-h3 uk-heading-line text-center mt-3 w-full pb-6">Bigstone Community</h1>
+      <p class="uk-text-lead text-xs">Welcome to the Bigstone Community! This is the place where you can share your creations & vote on standarts!</p>
+      <button class="uk-btn uk-btn-default mt-4" id="loginBtn">Login with Discord</button>
+    </div>
+
     <script type="module" src="../javascript/auth/login.js"></script>
   </body>
 </html>
